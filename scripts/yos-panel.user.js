@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         yOS Memory Panel
 // @namespace    https://github.com/yj000018/yos-userscripts
-// @version      1.1.0
+// @version      1.2.0
 // @description  Floating yOS panel — Mémoriser & Hydrater on any page. CSP-safe via Shadow DOM.
 // @author       Yannick Jolliet / Y-OS
 // @match        *://*/*
@@ -30,7 +30,7 @@
   const host = document.createElement('div');
   host.id = 'yos-panel-host';
   host.style.cssText = [
-    'position:fixed', 'bottom:24px', 'right:24px', 'z-index:2147483647',
+    'position:fixed', 'top:12px', 'left:12px', 'z-index:2147483647',
     'font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif',
     'user-select:none'
   ].join(';');
@@ -51,7 +51,7 @@
     }
     #toggle:hover{border-color:rgba(79,110,247,.8);box-shadow:0 4px 24px rgba(79,110,247,.5);transform:scale(1.05)}
     #menu{
-      position:absolute;bottom:58px;right:0;
+      position:absolute;top:58px;left:0;
       background:#0f1117;border:1px solid rgba(255,255,255,.1);
       border-radius:16px;padding:12px;min-width:240px;
       box-shadow:0 8px 32px rgba(0,0,0,.6);
@@ -102,7 +102,7 @@
       <div class="hdr">
         <div class="dot"></div>
         <span class="ttl">Y-OS</span>
-        <span class="ver">v1.1</span>
+        <span class="ver">v1.2</span>
       </div>
       <div class="url" id="url"></div>
 
