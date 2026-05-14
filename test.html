@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Y Life Panel — Test Page</title>
+  <style>
+    body { font-family: system-ui; background: #1a1a2e; color: #eee; padding: 40px; }
+    h1 { color: #4f6ef7; }
+    p { max-width: 600px; line-height: 1.8; color: #aaa; }
+    .test-content { margin-top: 20px; padding: 20px; background: rgba(255,255,255,.05); border-radius: 12px; }
+  </style>
+</head>
+<body>
+  <h1>Y Life Panel — Test Page</h1>
+  <p>This is a test page to validate the Y Life Panel v2.0 userscript rendering. The panel should appear in the top-right corner as a floating brain icon (🧠).</p>
+  
+  <div class="test-content">
+    <h2>Test Event Content</h2>
+    <p><strong>Restaurant Le Comptoir</strong> — Dîner le 14 juillet 2026 à 19h30. Réservation pour 4 personnes. Adresse: 12 rue de la Paix, Paris. Contact: Jean Dupont 06 12 34 56 78.</p>
+  </div>
+
+  <div class="test-content">
+    <h2>Test Contact</h2>
+    <p>Marie Martin — Architecte d'intérieur. Email: marie.martin@studio.fr. Projet salle de bain maison Landa. Devis reçu le 3 mai.</p>
+  </div>
+
+  <div class="test-content">
+    <h2>Test Task</h2>
+    <p>Acheter les carreaux pour la salle de bain. Budget: 2000€. Deadline: avant le 20 juin. Lié au projet Maison Landa.</p>
+  </div>
+
+  <!-- Inject the userscript directly for testing (simulating Tampermonkey) -->
+  <script>
+    // Simulate GM functions for testing
+    const gmStorage = {};
+    function GM_xmlhttpRequest(opts) {
+      console.log('[Y Life] API call:', opts.method, opts.url);
+      console.log('[Y Life] Payload:', opts.data);
+      // Simulate response
+      setTimeout(() => {
+        if (opts.url.includes('task.create')) {
+          opts.onload({ responseText: JSON.stringify({ task: { id: 'test-task-12345678' } }) });
+        } else if (opts.url.includes('intake')) {
+          opts.onload({ responseText: JSON.stringify({ success: true }) });
+        } else if (opts.url.includes('context-builder')) {
+          opts.onload({ responseText: JSON.stringify({ context: 'Test context loaded', sources: 3, instructions: 'Test instructions' }) });
+        } else {
+          opts.onload({ responseText: JSON.stringify({ messages: [] }) });
+        }
+      }, 800);
+    }
+    function GM_setValue(k, v) { gmStorage[k] = v; console.log('[Y Life] Saved:', k); }
+    function GM_getValue(k, d) { return gmStorage[k] || d; }
+
+    // Pre-set API key for testing
+    gmStorage['manus_api_key'] = 'test-key-for-demo';
+    gmStorage['ylife_project_id'] = 'jipiV8WJS6hyCh9FW2MTLU';
+  </script>
+  <script src="scripts/yos-panel.user.js"></script>
+</body>
+</html>
